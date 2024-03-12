@@ -1,0 +1,48 @@
+题目：给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
+
+找出两个链表的节点差值，将多节点的那个的cur指针指向与少的那个链表的开头平行的地方，然后同时往后探，当链子相同时返回
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode* curA = headA;
+        ListNode* curB = headB;
+        int lenA = 0, lenB = 0;
+        while (curA != NULL) { // 求链表A的长度
+            lenA++;
+            curA = curA->next;
+        }
+        while (curB != NULL) { // 求链表B的长度
+            lenB++;
+            curB = curB->next;
+        }
+        curA = headA;
+        curB = headB;
+        // 让curA为最长链表的头，lenA为其长度
+        if (lenB > lenA) {
+            swap (lenA, lenB);
+            swap (curA, curB);
+        }
+        // 求长度差
+        int gap = lenA - lenB;
+        // 让curA和curB在同一起点上（末尾位置对齐）
+        while (gap--) {
+            curA = curA->next;
+        }
+        // 遍历curA 和 curB，遇到相同则直接返回
+        while (curA != NULL) {
+            if (curA == curB) {
+                return curA;
+            }
+            curA = curA->next;
+            curB = curB->next;
+        }
+        return NULL;
+    }
+};
+
+遇到问题：
+ if (lenB > lenA) {
+            swap (lenA, lenB);
+            swap (curA, curB);
+        }//不懂swap，交换变量值
