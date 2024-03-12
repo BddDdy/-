@@ -1,0 +1,21 @@
+题意：给定两个数组，编写一个函数来计算它们的交集。
+
+思考：要记得set和map除了前边加mul的都是不重复的，然后前边加unorder是无序的，否则都是有序的。
+用两个无序set（比较快）去一个存结果，一个存两个数组的其中一个，这个无序set与第二个数组所有数比较，重复的存进结果无序set
+
+
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        unordered_set<int> result_set; // 存放结果，之所以用set是为了给结果集去重
+        unordered_set<int> nums_set(nums1.begin(), nums1.end());
+        for (int num : nums2) {
+            // 发现nums2的元素 在nums_set里又出现过
+            if (nums_set.find(num) != nums_set.end()) {
+                result_set.insert(num);
+            }
+        }
+        return vector<int>(result_set.begin(), result_set.end());
+    }
+};
+
