@@ -1,0 +1,26 @@
+class MySolution {
+public:
+    LinkedNode* DeleNode(LinkedNode* head,int n) {
+        LinkedNode* dummyNode = new LinkedNode(0);
+        dummyNode->next = head;
+        
+        LinkedNode* SlowNode= dummyNode;
+        LinkedNode* FastNode = dummyNode;
+        while (n-- && FastNode!=NULL) {
+            FastNode = FastNode->next;
+        }
+        FastNode = FastNode->next;
+
+        while (FastNode!= NULL) {
+            SlowNode = SlowNode->next;
+            FastNode = FastNode->next;
+        }
+        SlowNode->next = SlowNode->next->next;
+        
+        return dummyNode->next;
+      
+    }
+
+这个代码里主要有用虚拟头部和双指针法，Fast比Slow快n个节点，在Fast=NULL时，SlowNode->next = SlowNode->next->next;就行了
+
+遇到的问题第9行和第18行
